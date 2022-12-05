@@ -2,15 +2,18 @@ FROM node:16-buster
 
 WORKDIR /app
 
-COPY build ./build
+COPY server ./server
 
 RUN mkdir -p ./tmp/image
 RUN mkdir -p ./tmp/thumb
 RUN mkdir -p ./tmp/uploads
 
 COPY package.json ./
+COPY .babelrc ./
 
-RUN npm install --prod
+RUN yarn install
+RUN yarn build
+RUN yarn clean-extensions
 
 WORKDIR /app/build
 
